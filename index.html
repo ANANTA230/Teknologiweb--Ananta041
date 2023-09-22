@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kalkulator Sederhana</title>
+</head>
+<body>
+    <header>
+        <p>I Gede Ananta Prasetia (2215101041)</p>
+        <p>Kelas: B</p>
+    </header>
+    <h1>Aplikasi Menghitung Sederhana</h1>
+    <label for="inputVariable">Masukkan Variabel:</label>
+    <input type="number" id="inputVariable">
+    <label for="inputSisi">Masukkan Panjang Sisi:</label>
+    <input type="number" id="inputSisi">
+    <button onclick="hitung('fibonacci')">Hitung Fibonacci</button>
+    <button onclick="hitung('volume')">Hitung Volume Kubus</button>
+    <div id="hasilPerhitungan"></div>
+    
+    <script>
+        function hitung(type) {
+            const inputElement = document.getElementById(type === 'fibonacci' ? 'inputVariable' : 'inputSisi');
+            const hasilElement = document.getElementById('hasilPerhitungan');
+
+            if (type === 'fibonacci') {
+                const n = parseInt(inputElement.value);
+                if (isNaN(n)) {
+                    hasilElement.innerText = "Masukkan angka yang valid.";
+                    return;
+                }
+
+                let recursiveResult = 0;
+                let iterativeResult = [];
+                for (let i = 1; i <= n; i++) {
+                    recursiveResult = fibonacci(i);
+                    iterativeResult.push(recursiveResult);
+                }
+
+                hasilElement.innerHTML = `
+                    Suku ke-${n} dari deret Fibonacci (Rekursi): ${recursiveResult}<br>
+                    Suku ke-${n} dari deret Fibonacci (Iteratif): ${iterativeResult.join(", ")}
+                `;
+            } else if (type === 'volume') {
+                const sisi = parseFloat(inputElement.value);
+                if (isNaN(sisi) || sisi <= 0) {
+                    hasilElement.innerText = "Masukkan panjang sisi yang valid (bilangan positif).";
+                    return;
+                }
+
+                const volume = sisi * sisi * sisi;
+                hasilElement.innerText = `Volume kubus dengan sisi ${sisi} adalah ${volume}`;
+            }
+        }
+
+        function fibonacci(n) {
+            if (n <= 1) {
+                return n;
+            } else {
+                return fibonacci(n - 1) + fibonacci(n - 2);
+            }
+        }
+    </script>
+</body>
+</html>
